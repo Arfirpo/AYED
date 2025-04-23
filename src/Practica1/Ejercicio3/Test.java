@@ -62,14 +62,15 @@ public class Test {
 
     // recorrer y mostrar array de profesores
     for (Profesor profesor : vProfesor) {
-      System.out.println(profesor.tusDatos()); break;
+      System.out.println(profesor.tusDatos()); 
     }
 
     // recorrer y mostrar array de estudiantes
     for (Estudiante estudiante : vEstudiante) {
-      System.out.println(estudiante.tusDatos());break;
+      System.out.println(estudiante.tusDatos());
     }
 
     s.close();
+
   }
 }
