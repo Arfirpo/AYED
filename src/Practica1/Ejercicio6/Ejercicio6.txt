@@ -1,0 +1,16 @@
+## Ejercicio 6 - ArrayList & LinkedList
+
+### ¿En que casos la arraylist ofrece un mejor rendimiento que una linkedlist?
+
+- La *ArrayList* tiene una mejor performance para acceso aleatorio ya que los arreglos se basan en índices. Eso significa que acceder a cualquier elemento siempre lleva un tiempo constante O(1).
+
+### ¿Cuando LinkedList puede ser más eficiente que ArrayList?
+- La *LinkedList* es más útil para Agregar/Borrar elementos en/de en un lugar específico, en el peor de los casos, es de O(n). Suele ser más rápida porque nunca se necesita cambiar el
+tamaño de la estructura..
+
+### ¿Que diferencias encuentra en el uso de la memoria en ArrayList y LinkedList?
+- Una LinkedList consume un poco más de memoria que una ArrayList ya que cada nodo almacena dos referencias al elemento anterior y al siguiente.
+
+### ¿En que casos sería preferible usar un ArrayList o un LinkedList?
+- Una *ArrayList* es más útil cuando la aplicación requiere acceso a datos y su tamaño no varía demasiado y una *LinkedList* es más útil cuando se conoce que la aplicación requiere
+manipulación de datos (muchas inserciones y borrados).
