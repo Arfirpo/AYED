@@ -40,7 +40,7 @@ public class Controladores {
   }
 
   public static ArrayList<Integer> cargarArray(ArrayList<Integer> array, Scanner s) {
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 5; i++) {
       System.out.print("Ingrese un número: ");
       array.add(s.nextInt());
     }
@@ -104,9 +104,30 @@ public class Controladores {
     return array;
   }
 
-  public ArrayList<Integer> combinarOrdenado(ArrayList<Integer> array1, ArrayList<Integer> array2) {
+  public static ArrayList<Integer> combinarOrdenado(ArrayList<Integer> array1, ArrayList<Integer> array2) {
+
     ArrayList<Integer> arrayCombinado = new ArrayList<Integer>();
-    //codigo
+
+    int indice1 = 0, indice2 = 0;
+
+    while (indice1 < array1.size() && indice2 < array2.size()) {
+      if (array1.get(indice1) < array2.get(indice2)) {
+        arrayCombinado.add(array1.get(indice1));
+        indice1++;
+      } else {
+        arrayCombinado.add(array2.get(indice2));
+        indice2++;
+      }
+    }
+
+    while (indice1 < array1.size()) {
+      arrayCombinado.add(array1.get(indice1));
+      indice1++;
+    }
+    while (indice2 < array2.size()) {
+      arrayCombinado.add(array2.get(indice2));
+      indice2++;
+    }
     return arrayCombinado;
   }
 }
