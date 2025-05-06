@@ -99,35 +99,67 @@ public class BinaryTree<T> {
 		return abEspejo;
 	}
 
+	// recorrido preorden
+	public void imprimirPreOrden() {
+		System.out.println(this.getData());
+		if (this.hasLeftChild())
+			this.getLeftChild().imprimirPreOrden();
+		if (this.hasRightChild())
+			this.getRightChild().imprimirPreOrden();
+	}
+
+	// recorrido inOrden
+	public void imprimirInOrden() {
+		if (this.hasLeftChild())
+			this.getLeftChild().imprimirInOrden();
+		System.out.println(this.getData());
+		if (this.hasRightChild())
+			this.getRightChild().imprimirInOrden();
+	}
+
+	// recorrido postOrden
+	public void imprimirPostOrden() {
+		if (this.hasLeftChild())
+			this.getLeftChild().imprimirInOrden();
+			if (this.hasRightChild())
+			this.getRightChild().imprimirInOrden();
+		System.out.println(this.getData());
+	}
+
 	// recorrido por niveles
 	public void imprimirEntreNiveles(int n, int m) {
+		
 		if (this.isEmpty() || n < 0 || m < n)
 			return;
-		BinaryTree<T> ab = null;
+
+		BinaryTree<T> nodoActual = null;
+
 		Queue<BinaryTree<T>> cola = new Queue<BinaryTree<T>>();
+
 		int nivelActual = 0;
-		cola.enqueue(this);  //encolo la raiz
-		cola.enqueue(null); //encolo null (marcando el fin del nivel 0)
+
+		cola.enqueue(this); // encolo la raiz
+		cola.enqueue(null); // encolo null (marcando el fin del nivel 0)
+
 		while (!cola.isEmpty()) {
-			int nodoNivel = cola.size();
-			if (nivelActual >= n && nivelActual <= m) {
-				for (int i = 0; i < nodoNivel; i++) {
-					ab = cola.dequeue();
-					System.out.println(ab.getData() + " | ");
-					if (ab.hasLeftChild()) {
-						cola.enqueue(ab.getLeftChild());
-					}
-					if (ab.hasRightChild()) {
-						cola.enqueue(ab.getRightChild());
-					}
+			nodoActual = cola.dequeue();
+			if(nodoActual != null){
+				if(nivelActual >= n && nivelActual <= m){ //si estamos dentro del rango buscado
+					System.out.println(nodoActual.getData() + " | ");
 				}
+				if (nodoActual.hasLeftChild()) {
+					cola.enqueue(nodoActual.getLeftChild());
+				}
+				if (nodoActual.hasRightChild()) {
+					cola.enqueue(nodoActual.getRightChild());
+				}
+			} else if (!cola.isEmpty()){
+				System.out.println();
+				nivelActual++;
+				cola.enqueue(null); //marco el fin del nivel
 			} else {
-				for (int i = 0; i < nodoNivel; i++) {
-					cola.dequeue();
-				}
+				nivelActual++;
 			}
-			nivelActual++;
-			System.out.println("");
 		}
 	}
 
