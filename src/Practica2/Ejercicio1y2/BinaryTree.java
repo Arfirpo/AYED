@@ -1,4 +1,4 @@
-package Practica2.Ejercicio1;
+package Practica2.Ejercicio1y2;
 
 import Practica1.Ejercicio8.Queue;
 
@@ -121,30 +121,24 @@ public class BinaryTree<T> {
 	public void imprimirPostOrden() {
 		if (this.hasLeftChild())
 			this.getLeftChild().imprimirInOrden();
-			if (this.hasRightChild())
+		if (this.hasRightChild())
 			this.getRightChild().imprimirInOrden();
 		System.out.println(this.getData());
 	}
 
 	// recorrido por niveles
 	public void imprimirEntreNiveles(int n, int m) {
-		
 		if (this.isEmpty() || n < 0 || m < n)
 			return;
-
 		BinaryTree<T> nodoActual = null;
-
 		Queue<BinaryTree<T>> cola = new Queue<BinaryTree<T>>();
-
 		int nivelActual = 0;
-
 		cola.enqueue(this); // encolo la raiz
 		cola.enqueue(null); // encolo null (marcando el fin del nivel 0)
-
 		while (!cola.isEmpty()) {
 			nodoActual = cola.dequeue();
-			if(nodoActual != null){
-				if(nivelActual >= n && nivelActual <= m){ //si estamos dentro del rango buscado
+			if (nodoActual != null) {
+				if (nivelActual >= n && nivelActual <= m) { // si estamos dentro del rango buscado
 					System.out.println(nodoActual.getData() + " | ");
 				}
 				if (nodoActual.hasLeftChild()) {
@@ -153,14 +147,13 @@ public class BinaryTree<T> {
 				if (nodoActual.hasRightChild()) {
 					cola.enqueue(nodoActual.getRightChild());
 				}
-			} else if (!cola.isEmpty()){
+			} else if (!cola.isEmpty()) {
 				System.out.println();
 				nivelActual++;
-				cola.enqueue(null); //marco el fin del nivel
+				cola.enqueue(null); // marco el fin del nivel
 			} else {
 				nivelActual++;
 			}
 		}
 	}
-
 }
