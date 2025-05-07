@@ -10,20 +10,23 @@ public class ProfundidadArbolBinario {
   }
 
   public int sumaElementosProfundidad(int profundidad) {
-    int suma = 0;
-    int nivel = 0;
-    return !this.arbol.isEmpty() ? suma = sumaRecursiva(arbol, profundidad, nivel, suma) : 0;
+    if(profundidad < 0) return 0;
+    if(this.arbol == null || this.arbol.isEmpty()) return 0;
+    return sumaRecursiva(arbol, profundidad, 0)
   }
 
-  private int sumaRecursiva(BinaryTree<Integer> arbol, int profundidad, int nivel, int suma) {
-    if (nivel >= 0 && nivel < profundidad) {
-      if (arbol.hasLeftChild())
-        sumaRecursiva(arbol.getLeftChild(), profundidad, nivel++, suma);
-      if (arbol.hasRightChild())
-        sumaRecursiva(arbol.getRightChild(), profundidad, nivel++, suma);
-    } else if (nivel == profundidad) {
-      return suma += arbol.getData();
+  private int sumaRecursiva(BinaryTree<Integer> nodo, int profundidad, int nivel) {
+    if (nodo == null || nodo.isEmpty()) {
+      return 0;
     }
-    return suma;
+    if(nivel == profundidad){
+      return nodo.getData();
+    }
+
+    if(nivel < profundidad){
+      int sumaIzq = 0;
+      int sumaDer = 0;
+      
+    }
   }
 }
