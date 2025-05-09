@@ -21,58 +21,7 @@ public class ParcialArboles {
     return this.arbol;
   }
 
-  public boolean isLeftTree(int num) {
-
-    return ((this.arbol != null) && !this.arbol.isEmpty()) ? isLeftTreeRec(this.arbol, num) : false;
-  }
-
-  private boolean isLeftTreeRec(BinaryTree<Integer> nodo, int num) {
-
-    if ((nodo == null) || (nodo.isEmpty()))
-      return false;
-
-    if (nodo.getData() == num) {
-      int cantIzq = 0;
-      int cantDer = 0;
-
-      if (nodo.hasLeftChild()) {
-        cantIzq = contadorHijoUnico(nodo.getLeftChild(), 0);
-      } else {
-        cantIzq = -1;
-      }
-      if (nodo.hasRightChild()) {
-        cantDer = contadorHijoUnico(nodo.getRightChild(), 0);
-      } else {
-        cantDer = -1;
-      }
-      return cantIzq > cantDer;
-    }
-
-    else {
-      boolean isFound = false;
-      if (nodo.hasLeftChild())
-        isFound = isLeftTreeRec(nodo.getLeftChild(), num);
-      if ((!isFound) && (nodo.hasRightChild()))
-        isLeftTreeRec(nodo.getRightChild(), num);
-      return isFound;
-    }
-  }
-
-  private int contadorHijoUnico(BinaryTree<Integer> nodo, int cant) {
-    if (nodo == null || nodo.isEmpty()) {
-      return cant;
-    }
-
-    if ((nodo.hasLeftChild() && !nodo.hasRightChild()) || (!nodo.hasLeftChild() && !nodo.hasRightChild())) {
-      cant++;
-    }
-    int totCant = cant;
-    if (nodo.hasLeftChild())
-      totCant = contadorHijoUnico(nodo.getLeftChild(), totCant);
-    if (nodo.hasRightChild())
-      totCant = contadorHijoUnico(nodo.getRightChild(), totCant);
-    return totCant;
-  }
+  
 
   public static void main(String[] args) {
 
