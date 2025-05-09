@@ -21,7 +21,55 @@ public class ParcialArboles {
     return this.arbol;
   }
 
-  
+  public boolean isLeftTree(int num) {
+    return (this.arbol != null || !this.arbol.isEmpty()) ? isLeftTreeRecursive(this.arbol, num) : false;
+  }
+
+  private boolean isLeftTreeRecursive(BinaryTree<Integer> nodo, int num) {
+    
+    if (nodo == null || nodo.isEmpty())
+      return false;
+
+    else if (nodo.getData() == num) {
+      int cantLeft = 0;
+      int cantRight = 0;
+      if (nodo.hasLeftChild())
+        cantLeft = contadorHijosUnicos(nodo.getLeftChild());
+      else
+        cantLeft = -1;
+      if (nodo.hasRightChild())
+        cantRight = contadorHijosUnicos(nodo.getRightChild());
+      else
+        cantRight = -1;
+      return cantLeft > cantRight;
+    }
+    
+    boolean estaIzq = false;
+    boolean estaDer = false;
+    if (nodo.hasLeftChild()) {
+      estaIzq = isLeftTreeRecursive(nodo.getLeftChild(), num);
+    }
+    if (!estaIzq && nodo.hasRightChild())
+      estaDer = isLeftTreeRecursive(nodo.getRightChild(), num);
+    return estaIzq || estaDer;
+  }
+
+  private int contadorHijosUnicos(BinaryTree<Integer> nodo) {
+    if (nodo == null || nodo.isEmpty())
+      return 0;
+    int cant = 0;
+    if (nodo.hasLeftChild() && !nodo.hasRightChild()
+        || !nodo.hasLeftChild() && nodo.hasRightChild()) {
+      cant = 1;
+    }
+    int cantIzq = 0;
+    int cantDer = 0;
+    if (nodo.hasLeftChild())
+      cantIzq = contadorHijosUnicos(nodo.getLeftChild());
+    if (nodo.hasRightChild())
+      cantDer = contadorHijosUnicos(nodo.getRightChild());
+    return cant + cantIzq + cantDer;
+  }
 
   public static void main(String[] args) {
 
@@ -48,10 +96,10 @@ public class ParcialArboles {
     ParcialArboles pA = new ParcialArboles(arbol);
 
     System.out.println();
-    System.out.println(pA.isLeftTree(7));
-    System.out.println(pA.isLeftTree(2));
-    System.out.println(pA.isLeftTree(-5));
-    System.out.println(pA.isLeftTree(19));
-    System.out.println(pA.isLeftTree(-3));
+    System.out.println("¿EL subarbol con el nodo " + 7 + " es arbol izquierdo? " + pA.isLeftTree(7));
+    System.out.println("¿EL subarbol con el nodo " + 2 + " es arbol izquierdo? " + pA.isLeftTree(2));
+    System.out.println("¿EL subarbol con el nodo " + -5 + " es arbol izquierdo? " + pA.isLeftTree(-5));
+    System.out.println("¿EL subarbol con el nodo " + 19 + " es arbol izquierdo? " + pA.isLeftTree(19));
+    System.out.println("¿EL subarbol con el nodo " + -3 + " es arbol izquierdo? " + pA.isLeftTree(-3));
   }
 }
