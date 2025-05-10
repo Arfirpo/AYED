@@ -1,4 +1,4 @@
-package Practica2.ejercicio7;
+package Practica2.Ejercicio7;
 
 import Practica2.Ejercicio1y2.BinaryTree;
 
