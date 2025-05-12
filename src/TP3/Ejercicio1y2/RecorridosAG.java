@@ -3,6 +3,8 @@ package TP3.Ejercicio1y2;
 import java.util.LinkedList;
 import java.util.List;
 
+import TP1.Ejercicio8.Queue;
+
 public class RecorridosAG {
 
 	public List<Integer> numerosImparesMayoresQuePreOrden(GeneralTree<Integer> arbol, Integer n) {
@@ -70,6 +72,35 @@ public class RecorridosAG {
 			lista.add(nodo.getData());
 	}
 
+	public List<Integer> numerosImparesMayoresQuePorNiveles(GeneralTree<Integer> arbol, Integer n) {
+		if (arbol == null || arbol.isEmpty())
+			return new LinkedList<Integer>();
+		List<Integer> lista = new LinkedList<Integer>();
+		porNiveles(arbol, lista, n);
+		return lista;
+	}
+
+	private void porNiveles(GeneralTree<Integer> nodo, List<Integer> lista, Integer n) {
+		if (nodo == null || nodo.isEmpty())
+			return;
+		Queue<GeneralTree<Integer>> cola = new Queue<GeneralTree<Integer>>();
+		cola.enqueue(nodo);
+		cola.enqueue(null);
+		while (!cola.isEmpty()) {
+			GeneralTree<Integer> nodoActual = cola.dequeue();
+			if (nodoActual != null) {
+				if ((nodoActual.getData() % 2 == 1) && (nodoActual.getData() > n))
+					lista.add(nodoActual.getData());
+				List<GeneralTree<Integer>> children = nodoActual.getChildren();
+				if (!children.isEmpty()) {
+					children.forEach(child -> cola.enqueue(child));
+				}
+			} else if (!cola.isEmpty()) {
+				cola.enqueue(null);
+			}
+		}
+	}
+
 	public static void main(String[] args) {
 
 		GeneralTree<Integer> ag1 = new GeneralTree<Integer>(1);
@@ -97,6 +128,7 @@ public class RecorridosAG {
 		List<Integer> res1 = recorrido.numerosImparesMayoresQuePreOrden(ag, 1);
 		List<Integer> res2 = recorrido.numerosImparesMayoresQueInOrden(ag, 1);
 		List<Integer> res3 = recorrido.numerosImparesMayoresQuePostOrden(ag, 1);
+		List<Integer> res4 = recorrido.numerosImparesMayoresQuePorNiveles(ag, 1);
 
 		// Recorridos con condicion.
 		System.out.print("Pre Orden - Lista de numeros impares mayores que 1: ");
@@ -106,8 +138,12 @@ public class RecorridosAG {
 		res2.forEach(num -> System.out.print(res2.indexOf(num) < res2.size() - 1 ? num + ", " : num + "."));
 		System.out.println();
 		System.out.print("Post Orden - Lista de numeros impares mayores que 1: ");
-		res2.forEach(num -> System.out.print(res3.indexOf(num) < res3.size() - 1 ? num + ", " : num + "."));
+		res3.forEach(num -> System.out.print(res3.indexOf(num) < res3.size() - 1 ? num + ", " : num + "."));
+		System.out.println();
+		System.out.print("Por Niveles - Lista de numeros impares mayores que 1: ");
+		res4.forEach(num -> System.out.print(res4.indexOf(num) < res4.size() - 1 ? num + ", " : num + "."));
 
+		System.out.println();
 		System.out.println();
 
 		// Recorridos sin condicion.
@@ -119,5 +155,8 @@ public class RecorridosAG {
 		System.out.println();
 		System.out.print("Impresion de arbol General (sin condicion) - Post Orden: ");
 		ag.imprimirArbolPostOrden();
+		System.out.println();
+		System.out.print("Impresion de arbol General (sin condicion) - Por Niveles: ");
+		ag.imprimirArbolPorNiveles();
 	}
 }

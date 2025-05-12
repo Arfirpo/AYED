@@ -3,6 +3,8 @@ package TP3.Ejercicio1y2;
 import java.util.LinkedList;
 import java.util.List;
 
+import TP1.Ejercicio8.Queue;
+
 public class GeneralTree<T> {
 
 	private T data;
@@ -103,5 +105,23 @@ public class GeneralTree<T> {
 		if (!children.isEmpty())
 			children.forEach(child -> child.imprimirArbolPostOrden());
 		System.out.print(this.getData() + " ");
+	}
+
+	public void imprimirArbolPorNiveles() {
+		if (this == null || this.isEmpty())
+			return;
+		Queue<GeneralTree<T>> cola = new Queue<GeneralTree<T>>();
+		cola.enqueue(this);
+		cola.enqueue(null);
+		while (!cola.isEmpty()) {
+			GeneralTree<T> nodoActual = cola.dequeue();
+			if (nodoActual != null) {
+				System.out.print(nodoActual.getData() + " ");
+				List<GeneralTree<T>> children = nodoActual.getChildren();
+				if (!children.isEmpty())
+					children.forEach(child -> cola.enqueue(child));
+			} else if (!cola.isEmpty())
+				cola.enqueue(null);
+		}
 	}
 }
