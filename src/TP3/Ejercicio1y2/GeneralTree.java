@@ -72,4 +72,36 @@ public class GeneralTree<T> {
 
 		return 0;
 	}
+
+	public void imprimirArbolPreOrden() {
+		if (this.getData() == null)
+			return;
+		System.out.print(this.getData() + " ");
+		List<GeneralTree<T>> children = this.getChildren();
+		if (!children.isEmpty()) {
+			children.forEach(child -> child.imprimirArbolPreOrden());
+		}
+	}
+
+	public void imprimirArbolInOrden() {
+		if (this.getData() == null)
+			return;
+		List<GeneralTree<T>> children = this.getChildren();
+		if (!children.isEmpty())
+			children.get(0).imprimirArbolInOrden();
+		System.out.print(this.getData() + " ");
+		if (children.size() > 1)
+			for (int i = 1; i < children.size(); i++) {
+				children.get(i).imprimirArbolInOrden();
+			}
+	}
+
+	public void imprimirArbolPostOrden() {
+		if (this.getData() == null)
+			return;
+		List<GeneralTree<T>> children = this.getChildren();
+		if (!children.isEmpty())
+			children.forEach(child -> child.imprimirArbolPostOrden());
+		System.out.print(this.getData() + " ");
+	}
 }

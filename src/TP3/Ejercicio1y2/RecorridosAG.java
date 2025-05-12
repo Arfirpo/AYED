@@ -50,6 +50,26 @@ public class RecorridosAG {
 		}
 	}
 
+	public List<Integer> numerosImparesMayoresQuePostOrden(GeneralTree<Integer> arbol, Integer n) {
+		if (arbol == null || arbol.isEmpty())
+			return new LinkedList<Integer>();
+		List<Integer> resultado = new LinkedList<Integer>();
+		postOrden(arbol, resultado, n);
+		return resultado;
+	}
+
+	private void postOrden(GeneralTree<Integer> nodo, List<Integer> lista, Integer n) {
+		if (nodo == null || nodo.isEmpty())
+			return;
+
+		List<GeneralTree<Integer>> children = nodo.getChildren();
+		if (!children.isEmpty())
+			children.forEach(child -> postOrden(child, lista, n));
+
+		if ((nodo.getData() % 2 != 0) && (nodo.getData() > n))
+			lista.add(nodo.getData());
+	}
+
 	public static void main(String[] args) {
 
 		GeneralTree<Integer> ag1 = new GeneralTree<Integer>(1);
@@ -74,14 +94,30 @@ public class RecorridosAG {
 
 		RecorridosAG recorrido = new RecorridosAG();
 
-		List<Integer> resultado = recorrido.numerosImparesMayoresQuePreOrden(ag, 1);
-		List<Integer> resultado2 = recorrido.numerosImparesMayoresQueInOrden(ag, 1);
+		List<Integer> res1 = recorrido.numerosImparesMayoresQuePreOrden(ag, 1);
+		List<Integer> res2 = recorrido.numerosImparesMayoresQueInOrden(ag, 1);
+		List<Integer> res3 = recorrido.numerosImparesMayoresQuePostOrden(ag, 1);
 
-		System.out.print("Pre Orden - Lista de numeros impares mayores que 22: ");
-		resultado.forEach(num -> System.out.print(resultado.indexOf(num) < resultado.size() - 1 ? num + ", " : num + "."));
+		// Recorridos con condicion.
+		System.out.print("Pre Orden - Lista de numeros impares mayores que 1: ");
+		res1.forEach(num -> System.out.print(res1.indexOf(num) < res1.size() - 1 ? num + ", " : num + "."));
 		System.out.println();
-		System.out.print("In Orden - Lista de numeros impares mayores que 22: ");
-		resultado2
-				.forEach(num -> System.out.print(resultado2.indexOf(num) < resultado2.size() - 1 ? num + ", " : num + "."));
+		System.out.print("In Orden - Lista de numeros impares mayores que 1: ");
+		res2.forEach(num -> System.out.print(res2.indexOf(num) < res2.size() - 1 ? num + ", " : num + "."));
+		System.out.println();
+		System.out.print("Post Orden - Lista de numeros impares mayores que 1: ");
+		res2.forEach(num -> System.out.print(res3.indexOf(num) < res3.size() - 1 ? num + ", " : num + "."));
+
+		System.out.println();
+
+		// Recorridos sin condicion.
+		System.out.print("Impresion de arbol General (sin condicion) - Pre Orden: ");
+		ag.imprimirArbolPreOrden();
+		System.out.println();
+		System.out.print("Impresion de arbol General (sin condicion) - In Orden: ");
+		ag.imprimirArbolInOrden();
+		System.out.println();
+		System.out.print("Impresion de arbol General (sin condicion) - Post Orden: ");
+		ag.imprimirArbolPostOrden();
 	}
 }
