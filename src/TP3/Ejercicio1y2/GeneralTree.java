@@ -62,8 +62,24 @@ public class GeneralTree<T> {
 	}
 
 	public int altura() {
+		if (this == null || this.isEmpty())
+			return 0;
+		return alturaRec(this);
+	}
 
-		return 0;
+	private int alturaRec(GeneralTree<T> nodo) {
+		if (nodo == null || nodo.isEmpty())
+			return 0;
+		List<GeneralTree<T>> children = nodo.getChildren();
+		if (children.isEmpty())
+			return 0;
+		int maxAlt = 0;
+		for (GeneralTree<T> child : children) {
+			int altura = alturaRec(child);
+			if (altura > maxAlt)
+				maxAlt = altura;
+		}
+		return maxAlt + 1;
 	}
 
 	public int nivel(T dato) {
