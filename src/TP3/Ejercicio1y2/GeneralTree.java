@@ -109,8 +109,22 @@ public class GeneralTree<T> {
 	}
 
 	public int ancho() {
-
-		return 0;
+		if (this == null || this.isEmpty())
+			return 0;
+		Queue<GeneralTree<T>> cola = new Queue<GeneralTree<T>>();
+		cola.enqueue(this);
+		int maxAncho = 1;
+		while (!cola.isEmpty()) {
+			int anchoNivel = cola.size();
+			if (anchoNivel > maxAncho)
+				maxAncho = anchoNivel;
+			for (int i = 0; i < anchoNivel; i++) {
+				GeneralTree<T> nodoActual = cola.dequeue();
+				List<GeneralTree<T>> children = nodoActual.getChildren();
+				children.forEach(child -> cola.enqueue(child));
+			}
+		}
+		return maxAncho;
 	}
 
 	public void imprimirArbolPreOrden() {

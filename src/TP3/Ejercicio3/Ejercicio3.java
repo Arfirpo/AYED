@@ -32,10 +32,15 @@ public class Ejercicio3 {
 
 		GeneralTree<Integer> ag = new GeneralTree<Integer>(1, children1);
 
+		// prueba de altura
 		System.out.println("El arbol ingresado tiene altura: " + ag.altura());
+		// prueba de nivel de datos
 		System.out.println("El dato 1 tiene nivel: " + ag.nivel(1));
 		System.out.println("El dato 4 tiene nivel: " + ag.nivel(4));
 		System.out.println("El dato 8 tiene nivel: " + ag.nivel(8));
 		System.out.println("El dato 11 tiene nivel: " + ag.nivel(11));
+		System.out.println("El dato 11 tiene nivel: " + ag.nivel(11));
+		// prueba de ancho
+		System.out.println("El arbol tiene ancho: " + ag.ancho());
 	}
 }
