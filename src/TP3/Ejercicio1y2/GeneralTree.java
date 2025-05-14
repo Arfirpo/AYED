@@ -83,7 +83,29 @@ public class GeneralTree<T> {
 	}
 
 	public int nivel(T dato) {
-		return 0;
+		if (this == null || this.isEmpty())
+			return -1;
+		Queue<GeneralTree<T>> cola = new Queue<GeneralTree<T>>();
+		cola.enqueue(this);
+		cola.enqueue(null);
+		boolean esta = false;
+		int nivel = 0;
+		while (!esta && !cola.isEmpty()) {
+			GeneralTree<T> nodoActual = cola.dequeue();
+			if (nodoActual != null) {
+				esta = nodoActual.getData().equals(dato);
+				if (!esta) {
+					List<GeneralTree<T>> children = nodoActual.getChildren();
+					if (!children.isEmpty()) {
+						children.forEach(child -> cola.enqueue(child));
+					}
+				}
+			} else if (!cola.isEmpty()) {
+				nivel++;
+				cola.enqueue(null);
+			}
+		}
+		return (esta) ? nivel : -1;
 	}
 
 	public int ancho() {
