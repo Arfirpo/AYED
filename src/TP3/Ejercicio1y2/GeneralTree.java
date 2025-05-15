@@ -176,4 +176,28 @@ public class GeneralTree<T> {
 				cola.enqueue(null);
 		}
 	}
+
+	public boolean esAncestro(T a, T b) {
+		return (this == null || this.isEmpty()) ? false : esAncestroRec(this, a, b);
+	}
+
+	private boolean esAncestroRec(GeneralTree<T> nodo, T a, T b) {
+		if (nodo == null || nodo.isEmpty())
+			return false;
+		boolean estaA = false;
+		boolean estaB;
+		if (nodo.getData().equals(a)) {
+			estaA = true;
+			List<GeneralTree<T>> children = nodo.getChildren();
+			estaB = false;
+			int i = 0;
+			while (!estaB && i < children.size()) {
+				estaB = buscarB(children.get(i), b);
+				i++;
+			}
+
+		}
+
+		return estaA && estaB;
+	}
 }
