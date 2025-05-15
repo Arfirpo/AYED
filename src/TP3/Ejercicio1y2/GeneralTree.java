@@ -184,20 +184,30 @@ public class GeneralTree<T> {
 	private boolean esAncestroRec(GeneralTree<T> nodo, T a, T b) {
 		if (nodo == null || nodo.isEmpty())
 			return false;
-		boolean estaA = false;
-		boolean estaB;
-		if (nodo.getData().equals(a)) {
-			estaA = true;
-			List<GeneralTree<T>> children = nodo.getChildren();
-			estaB = false;
-			int i = 0;
-			while (!estaB && i < children.size()) {
-				estaB = buscarB(children.get(i), b);
-				i++;
-			}
 
+		if (nodo.getData().equals(a))
+			return buscarB(nodo, b);
+
+		List<GeneralTree<T>> children = nodo.getChildren();
+		for (GeneralTree<T> child : children) {
+			if (esAncestroRec(child, a, b))
+				return true;
 		}
+		return false;
+	}
 
-		return estaA && estaB;
+	private boolean buscarB(GeneralTree<T> nodo, T b) {
+		if (nodo == null || nodo.isEmpty())
+			return false;
+
+		if (nodo.getData().equals(b))
+			return true;
+
+		List<GeneralTree<T>> children = nodo.getChildren();
+		for (GeneralTree<T> child : children) {
+			if (buscarB(child, b))
+				return true;
+		}
+		return false;
 	}
 }
