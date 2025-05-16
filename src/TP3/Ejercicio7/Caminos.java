@@ -11,20 +11,17 @@ public class Caminos {
   public List<Integer> caminoAHojaMasLejana() {
     if (this.arbol == null || this.arbol.isEmpty())
       return new LinkedList<Integer>();
-
-    List<Integer> resultado = new LinkedList<Integer>();
-
     if (this.arbol.isLeaf()) {
-      resultado.add(this.arbol.getData());
-      return resultado;
+      return new LinkedList<Integer>();
     }
-    return caminoAHojaMasLejanaRec(this.arbol, resultado);
+    List<Integer> camino = new LinkedList<Integer>();
+    List<Integer> lista = new LinkedList<Integer>();
+    lista.add(this.arbol.getData());
+
   }
 
-  private List<Integer> caminoAHojaMasLejanaRec(GeneralTree<Integer> nodo, List<Integer> resultado) {
-    if (nodo == null || nodo.isEmpty())
-      return null;
-    return resultado;
+  private static void caminoAHojaMasLejanaRec(GeneralTree<Integer> nodo, List<Integer> lista, List<Integer> camino) {
+
   }
 
 }
