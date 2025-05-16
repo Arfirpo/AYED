@@ -1,6 +1,5 @@
 package TP3.Ejercicio1;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
