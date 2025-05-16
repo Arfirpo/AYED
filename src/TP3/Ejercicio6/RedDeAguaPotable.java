@@ -1,6 +1,7 @@
 package TP3.Ejercicio6;
 
 import java.util.List;
+import java.lang.Character;
 
 import TP3.Ejercicio1y2.GeneralTree;
 
@@ -11,12 +12,12 @@ public class RedDeAguaPotable {
     this.red = new GeneralTree<Character>();
   }
 
-  public RedDeAguaPotable(Character c) {
-    this.red = new GeneralTree<Character>(c);
+  public RedDeAguaPotable(GeneralTree<Character> red) {
+    this.red = red;
   }
 
-  public void setRed(GeneralTree<Character> red) {
-    this.red = red;
+  public void setRed() {
+    this.red = new GeneralTree<Character>();
   }
 
   public GeneralTree<Character> getRed() {
