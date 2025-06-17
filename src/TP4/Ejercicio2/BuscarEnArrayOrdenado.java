@@ -72,7 +72,7 @@ public class BuscarEnArrayOrdenado {
 	}
 
 	public static void main(String[] args) {
-		int cantidadElementos = 200000;
+		int cantidadElementos = 500000;
 
 		int[] datos = initArrayOrdenado(cantidadElementos);
 

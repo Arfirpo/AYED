@@ -1,0 +1,7 @@
+***  RESPUESTAS EJERCICIO 1  ***
+
+*Respuesta a se adjunta en formato jpg.
+
+b) El procedimiento procesarMovimientos es ineficiente porque presenta una complejidad temporal de  orden (n * m) donde n es la cantidad de consultas y m es el promedio de los rangos de cuentas afectadas por cada consulta. En el caso ue existan muchas consultas o los rangos sean muy grandes este algoritmo se vuelve cada vez mas ineficiente.
+
+c) El procedimiento "procesarMovimientosOptimizado" se diferencia de "procesarMovimientos" en que la complejidad temporal del primero es de O(N + M) en cambio el anterior tiene una complejidad de O(N * M). Entonces, la principal diferencia radica en que este algoritmo optimizado recorre una unica vez tanto el arreglo de cuentas como de consultas, apoyandose en la creación de un array auxiliar en donde se registran los cambios que deben  aplicarse a las cuentas, para luego recorrerlo y actualizar las cuentas con sus valores correspondientes.
