@@ -1,6 +1,6 @@
-package TP5.adjMatrix;
+package TP5.Ejercicio1.adjMatrix;
 
-import TP5.Vertex;
+import TP5.Ejercicio1.Vertex;
 
 public class AdjMatrixVertex<T> implements Vertex<T> {
 	private T data;

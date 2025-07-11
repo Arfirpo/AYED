@@ -1,7 +1,7 @@
-package TP5.adjMatrix;
+package TP5.Ejercicio1.adjMatrix;
 
-import TP5.Edge;
-import TP5.Vertex;
+import TP5.Ejercicio1.Edge;
+import TP5.Ejercicio1.Vertex;
 
 public class AdjMatrixEdge<T> implements Edge<T> {
 	private Vertex<T> target;
