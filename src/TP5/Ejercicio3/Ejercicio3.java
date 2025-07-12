@@ -31,7 +31,7 @@ public class Ejercicio3 {
     List<String> recorrido = new LinkedList<String>();
     if (!this.mapaCiudades.isEmpty()) {
       Vertex<String> origen = this.mapaCiudades.search(ciudad1);
-      Vertex<String> destino = this.mapaCiudades.search(ciudad1);
+      Vertex<String> destino = this.mapaCiudades.search(ciudad2);
       if (origen != null && destino != null) {
         devolverCamino(origen, destino, recorrido, new boolean[this.mapaCiudades.getSize()]);
       }
@@ -40,8 +40,8 @@ public class Ejercicio3 {
   }
 
   private boolean devolverCamino(Vertex<String> origen, Vertex<String> destino, List<String> camino, boolean[] marca) {
-    boolean encontre = false;
 
+    boolean encontre = false;
     marca[origen.getPosition()] = true;
     camino.add(origen.getData());
 
@@ -52,7 +52,7 @@ public class Ejercicio3 {
     else {
       List<Edge<String>> adyacencias = this.mapaCiudades.getEdges(origen);
       Iterator<Edge<String>> it = adyacencias.iterator();
-      while (!encontre && it.hasNext()) {
+      while (it.hasNext() && !encontre) {
         Vertex<String> vertice = it.next().getTarget();
         int j = vertice.getPosition();
         if (!marca[j]) {
@@ -64,6 +64,8 @@ public class Ejercicio3 {
     if (!encontre) {
       camino.remove(camino.size() - 1);
     }
+
+    marca[origen.getPosition()] = false;
 
     return encontre;
   }
@@ -182,16 +184,45 @@ public class Ejercicio3 {
       Vertex<String> destino = this.getMapaCiudades().search(ciudad2);
       if (origen != null && destino != null) {
         caminoConMenorCargaDeCombustible(origen, destino, camino, new LinkedList<String>(),
-            new boolean[this.getMapaCiudades().getSize()], tanqueAuto, 0, Integer.MAX_VALUE);
+            new boolean[this.getMapaCiudades().getSize()], tanqueAuto, tanqueAuto, 0, Integer.MAX_VALUE);
       }
     }
     return camino;
   }
 
   private int caminoConMenorCargaDeCombustible(Vertex<String> origen, Vertex<String> destino, List<String> caminoMin,
-      List<String> caminoAct, boolean[] marca, int tanqueAct, int tanque, int min) {
+      List<String> caminoAct, boolean[] marca, int tanqueAct, int tanque, int recarga, int recargaMin) {
 
-    return min;
+    marca[origen.getPosition()] = true;
+    caminoAct.add(origen.getData());
+
+    if (origen == destino && recarga < recargaMin) {
+      recargaMin = recarga;
+      caminoMin.clear();
+      caminoMin.addAll(new LinkedList<String>(caminoAct));
+    }
+
+    else {
+      List<Edge<String>> adyacentes = this.getMapaCiudades().getEdges(origen);
+      Iterator<Edge<String>> it = adyacentes.iterator();
+      while (it.hasNext() && recarga < recargaMin) {
+        Edge<String> arista = it.next();
+        int j = arista.getTarget().getPosition();
+        int distancia = arista.getWeight();
+        if (!marca[j]) {
+          if (tanqueAct >= distancia) {
+            recargaMin = caminoConMenorCargaDeCombustible(arista.getTarget(), destino, caminoMin, caminoAct, marca,
+                tanqueAct - distancia, tanque, recarga, recargaMin);
+          } else if (tanque >= distancia) {
+            recargaMin = caminoConMenorCargaDeCombustible(arista.getTarget(), destino, caminoMin, caminoAct, marca,
+                tanqueAct - distancia, tanque, recarga + 1, recargaMin);
+          }
+        }
+      }
+    }
+    caminoAct.remove(caminoAct.size() - 1);
+    marca[origen.getPosition()] = false;
+    return recargaMin;
   }
 
   /*------------------------------------------------------------------ */
@@ -233,6 +264,56 @@ public class Ejercicio3 {
     mapaCiudades.connect(v6, v7, 9);
     mapaCiudades.connect(v7, v6, 9);
 
+    Ejercicio3 resultado = new Ejercicio3(mapaCiudades);
+
+    List<String> camino = resultado.caminoMasCorto("La Plata", "Chacabuco");
+    System.out.println("Camino mas corto.");
+    for (int i = 0; i < camino.size(); i++) {
+      System.out.print(camino.get(i) + (i < camino.size() - 1 ? " ~ " : "."));
+    }
+
+    System.out.println();
+    System.out.println();
+
+    List<String> camino2 = resultado.CaminoSinCargarCombustible("La Plata", "Chacabuco", 100);
+    System.out.println("Camino sin cargar combustible.");
+    for (int i = 0; i < camino2.size(); i++) {
+      System.out.print(camino2.get(i) + (i < (camino2.size() - 1) ? " ~ " : "."));
+    }
+
+    System.out.println();
+    System.out.println();
+
+    List<String> camino3 = resultado.caminoConMenorCargaDeCombustible("La Plata", "Chacabuco", 100);
+    System.out.println("Camino con menor carga de combustible.");
+    for (int i = 0; i < camino3.size(); i++) {
+      System.out.print(camino3.get(i) + (i < camino3.size() - 1 ? " ~ " : "."));
+    }
+
+    System.out.println();
+    System.out.println();
+
+    List<String> excepciones = new LinkedList<String>();
+    excepciones.add("Berisso");
+    excepciones.add("Ensenada");
+
+    List<String> camino4 = resultado.devolverCaminoExceptuando("La Plata", "Chacabuco", excepciones);
+    System.out.println("Camino con excepciones.");
+    for (int i = 0; i < camino4.size(); i++) {
+      System.out.print(camino4.get(i) + (i < camino4.size() - 1 ? " ~ " : "."));
+    }
+
+    System.out.println();
+    System.out.println();
+
+    List<String> camino5 = resultado.devolverCamino("La Plata", "Chacabuco");
+    System.out.println("Camino tradicional.");
+    for (int i = 0; i < camino5.size(); i++) {
+      System.out.print(camino5.get(i) + (i < camino5.size() - 1 ? " ~ " : "."));
+    }
+
+    System.out.println();
+    System.out.println();
   }
 
 }
