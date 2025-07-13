@@ -1,42 +1,62 @@
 package TP5.Ejercicio5;
 
 public class Persona {
+  private String tipo;
   private String nombre;
-  private String apellido;
-  private boolean activo;
+  private String domicilio;
+  private boolean cobro;
 
   public Persona() {
 
   }
 
-  public Persona(String nom, String ape, boolean activo) {
+  public Persona(String nom, String dom, String tipo) {
     this.setNombre(nom);
-    this.setApellido(ape);
-    this.setActivo(activo);
+    this.setDomicilio(dom);
+    this.setTipo(tipo);
+  }
+
+  public Persona(String tipo, String nom, String dom, boolean cobro) {
+    this.setNombre(nom);
+    this.setDomicilio(dom);
+    this.setTipo(tipo);
+    this.setCobro(cobro);
   }
 
   public void setNombre(String nombre) {
     this.nombre = nombre;
   }
 
-  public void setApellido(String apellido) {
-    this.apellido = apellido;
+  public void setDomicilio(String domicilio) {
+    this.domicilio = domicilio;
   }
 
-  public void setActivo(boolean activo) {
-    this.activo = activo;
+  public void setTipo(String tipo) {
+    this.tipo = tipo;
+  }
+
+  public void setCobro(boolean cobro) {
+    this.cobro = cobro;
   }
 
   public String getNombre() {
     return nombre;
   }
 
-  public String getApellido() {
-    return apellido;
+  public String getDomicilio() {
+    return domicilio;
   }
 
-  public boolean isActivo() {
-    return activo;
+  public String getTipo() {
+    return tipo;
+  }
+
+  public boolean getCobro() {
+    return cobro;
+  }
+
+  public boolean cumple() {
+    return (this.tipo.equals("Jubilado") && !this.cobro) ? true : false;
   }
 
 }
