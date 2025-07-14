@@ -67,6 +67,18 @@ public class BuscadorDeCaminos {
     marca[origen.getPosition()] = false;
   }
 
+  public void recorrerCaminosSeguros(List<List<String>> caminosSeguros) {
+    int i = 1;
+    for (List<String> camino : caminosSeguros) {
+      System.out.print("Camino seguro " + i + ": ");
+      for (int j = 0; j < camino.size(); j++) {
+        System.out.print(camino.get(j) + (j < camino.size() - 1 ? " ~ " : "."));
+      }
+      System.out.println();
+      i++;
+    }
+  }
+
   public static void main(String[] args) {
     Graph<String> bosque = new AdjListGraph<String>();
     Vertex<String> v1 = bosque.createVertex("Casa Caperucita");
@@ -101,17 +113,8 @@ public class BuscadorDeCaminos {
     BuscadorDeCaminos b = new BuscadorDeCaminos(bosque);
 
     List<List<String>> caminosSeguros = b.recorridosMasSeguros();
-
-    int i = 1;
-    for (List<String> camino : caminosSeguros) {
-      System.out.print("Camino seguro " + i + ": ");
-      for (int j = 0; j < camino.size(); j++) {
-        System.out.print(camino.get(j) + (j < camino.size() - 1 ? " ~ " : "."));
-      }
-      System.out.println();
-      i++;
-    }
-
+    
+    b.recorrerCaminosSeguros(caminosSeguros);
   }
 
 }
