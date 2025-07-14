@@ -9,7 +9,7 @@ import TP5.Ejercicio1.adjList.AdjListGraph;
 
 public class BuscadorDeCaminos {
 
-  Graph<String> bosque;
+  private Graph<String> bosque;
 
   public BuscadorDeCaminos() {
   }
@@ -40,7 +40,7 @@ public class BuscadorDeCaminos {
 
   private void recorridosMasSeguros(Vertex<String> origen, Vertex<String> destino, boolean[] marca,
       List<List<String>> caminos, List<String> caminoAct) {
-
+        
   }
 
   public static void main(String[] args) {
@@ -55,33 +55,28 @@ public class BuscadorDeCaminos {
 
     bosque.connect(v1, v2, 4);
     bosque.connect(v2, v1, 4);
-
     bosque.connect(v1, v3, 3);
     bosque.connect(v3, v1, 3);
-
     bosque.connect(v1, v4, 4);
     bosque.connect(v4, v1, 4);
-
     bosque.connect(v2, v5, 15);
     bosque.connect(v5, v2, 15);
-
     bosque.connect(v3, v5, 3);
     bosque.connect(v5, v3, 3);
-
     bosque.connect(v3, v4, 4);
     bosque.connect(v4, v3, 4);
-
     bosque.connect(v4, v5, 11);
     bosque.connect(v5, v4, 11);
-
     bosque.connect(v4, v6, 10);
     bosque.connect(v6, v4, 10);
-
     bosque.connect(v6, v7, 9);
     bosque.connect(v7, v6, 9);
-
     bosque.connect(v5, v7, 4);
     bosque.connect(v7, v5, 4);
+
+    BuscadorDeCaminos b = new BuscadorDeCaminos(bosque);
+
+    List<List<String>> caminosSeguros = b.recorridosMasSeguros();
 
   }
 
