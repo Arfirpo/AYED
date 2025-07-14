@@ -1,8 +1,10 @@
 package TP5.Ejercicio6;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import TP5.Ejercicio1.Edge;
 import TP5.Ejercicio1.Graph;
 import TP5.Ejercicio1.Vertex;
 import TP5.Ejercicio1.adjList.AdjListGraph;
@@ -29,7 +31,7 @@ public class BuscadorDeCaminos {
   public List<List<String>> recorridosMasSeguros() {
     List<List<String>> caminos = new LinkedList<List<String>>();
     if (!this.bosque.isEmpty()) {
-      Vertex<String> origen = this.bosque.search("Casa Caperusita");
+      Vertex<String> origen = this.bosque.search("Casa Caperucita");
       Vertex<String> destino = this.bosque.search("Casa Abuelita");
       if (origen != null && destino != null) {
         recorridosMasSeguros(origen, destino, new boolean[this.bosque.getSize()], caminos, new LinkedList<String>());
@@ -40,7 +42,29 @@ public class BuscadorDeCaminos {
 
   private void recorridosMasSeguros(Vertex<String> origen, Vertex<String> destino, boolean[] marca,
       List<List<String>> caminos, List<String> caminoAct) {
-        
+
+    marca[origen.getPosition()] = true;
+    caminoAct.add(origen.getData());
+
+    if (origen.getData().equals(destino.getData())) {
+      caminos.add(new LinkedList<String>(caminoAct));
+    }
+
+    else {
+      List<Edge<String>> adyacentes = this.bosque.getEdges(origen);
+      Iterator<Edge<String>> it = adyacentes.iterator();
+      while (it.hasNext()) {
+        Edge<String> arista = it.next();
+        int frutas = arista.getWeight();
+        int j = arista.getTarget().getPosition();
+        if (!marca[j] && frutas < 5) {
+          recorridosMasSeguros(arista.getTarget(), destino, marca, caminos, caminoAct);
+        }
+      }
+    }
+
+    caminoAct.remove(caminoAct.size() - 1);
+    marca[origen.getPosition()] = false;
   }
 
   public static void main(String[] args) {
@@ -77,6 +101,16 @@ public class BuscadorDeCaminos {
     BuscadorDeCaminos b = new BuscadorDeCaminos(bosque);
 
     List<List<String>> caminosSeguros = b.recorridosMasSeguros();
+
+    int i = 1;
+    for (List<String> camino : caminosSeguros) {
+      System.out.print("Camino seguro " + i + ": ");
+      for (int j = 0; j < camino.size(); j++) {
+        System.out.print(camino.get(j) + (j < camino.size() - 1 ? " ~ " : "."));
+      }
+      System.out.println();
+      i++;
+    }
 
   }
 
